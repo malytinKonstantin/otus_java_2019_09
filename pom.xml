@@ -12,7 +12,7 @@
 
     <developers>
         <developer>
-            <name>Constantin</name>
+            <name>Constantin Malyutin</name>
         </developer>
     </developers>
 
@@ -22,10 +22,14 @@
     </modules>
 
     <properties>
+        <!-- region Properties Java -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
+        <!-- endregion -->
         <com.google.guava.version>27.1-jre</com.google.guava.version>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -44,7 +48,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
