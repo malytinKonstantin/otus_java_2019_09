@@ -1,6 +1,6 @@
 ![](https://www.studytonight.com/java/images/collection-heirarchy.jpg)
 
-###Приняты такие сокращения:
+### Приняты такие сокращения:
 - E - Element
 - K - Key
 - N - Number
