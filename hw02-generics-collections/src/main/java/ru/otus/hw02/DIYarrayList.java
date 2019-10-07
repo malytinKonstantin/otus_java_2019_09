@@ -82,8 +82,8 @@ public class DIYarrayList<T> implements List<T> {
 
     public int indexOf(Object value) {
         int result = -1;
-        for (int i = 0; i < index; i++) {
-            if (elements[i] == value) {
+        for (int i = 0; i < index +1; i++) {
+            if (value != null && value.equals(elements[i])) {
                 result = i;
                 break;
             }
