@@ -12,24 +12,23 @@ public class DIYarrayList<T> implements List<T> {
      */
     private int index = -1;
 
-    /**
-     * каретка итератора
-     */
-    private int current = -1;
+    private static final int DEFAULT_CAPACITY = 10;
 
-    private static final int DEFAULT_CAPACITY = 20;
+    private final ListItr listItr;
 
     public DIYarrayList() {
         elements = (T[]) new Object[DEFAULT_CAPACITY];
+        listItr = new ListItr(this);
     }
 
     public DIYarrayList(int capacity) {
         elements = (T[]) new Object[capacity];
+        listItr = new ListItr(this);
     }
 
     private void growArray() {
-        T[] newArray = (T[]) new Object[length() * 2];
-        System.arraycopy(elements, 0, newArray, 0, length() );
+        T[] newArray = (T[]) new Object[elements.length * 2];
+        System.arraycopy(elements, 0, newArray, 0, elements.length );
         elements = newArray;
     }
 
@@ -44,7 +43,7 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public boolean add(T element) {
-        if (size() == length())
+        if (size() == elements.length)
             growArray();
 
         index++;
@@ -76,10 +75,6 @@ public class DIYarrayList<T> implements List<T> {
         return index + 1;
     }
 
-    public int length() {
-        return elements.length;
-    }
-
     public int indexOf(Object value) {
         int result = -1;
         for (int i = 0; i < index +1; i++) {
@@ -95,7 +90,7 @@ public class DIYarrayList<T> implements List<T> {
     public String toString() {
         String str = "[";
         for(T el : elements) str += " " + el;
-        str += " ]; size: " + size() + "; len: " + length() + ";";
+        str += " ]; size: " + size() + "; len: " + elements.length + ";";
         return str;
     }
 
@@ -169,60 +164,81 @@ public class DIYarrayList<T> implements List<T> {
         throw new UnsupportedOperationException();
     }
 
+    private class ListItr implements ListIterator<T> {
+        private final DIYarrayList<T> self;
+        private int current = -1;
+
+        ListItr(DIYarrayList<T> self) {
+            this.self = self;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current + 1 < self.size();
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                current++;
+                return self.elements[current];
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return current > -1;
+        }
+
+        @Override
+        public T previous() {
+            if (hasPrevious()) {
+                current--;
+                return self.elements[current];
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public int nextIndex() {
+            if (hasNext()) {
+                return current +1;
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public int previousIndex() {
+            if (hasPrevious()) {
+                return current -1;
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void set(T t) {
+            self.add(current, t);
+        }
+
+        @Override
+        public void add(T t) {
+            throw new UnsupportedOperationException();
+        }
+    }
+
     @Override
     public ListIterator<T> listIterator() {
-
-        DIYarrayList self = this;
-        current = -1;
-
-        return new ListIterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return current + 1 < length();
-            }
-
-            @Override
-            public T next() {
-                current++;
-                return elements[current];
-            }
-
-            @Override
-            public boolean hasPrevious() {
-                return current > -1;
-            }
-
-            @Override
-            public T previous() {
-                current--;
-                return elements[current];
-            }
-
-            @Override
-            public int nextIndex() {
-                return current +1;
-            }
-
-            @Override
-            public int previousIndex() {
-                return current -1;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public void set(T t) {
-                self.add(current, t);
-            }
-
-            @Override
-            public void add(T t) {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return listItr;
     }
 
     @Override
