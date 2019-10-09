@@ -88,10 +88,12 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public String toString() {
-        String str = "[";
-        for(T el : elements) str += " " + el;
-        str += " ]; size: " + size() + "; len: " + elements.length + ";";
-        return str;
+        StringBuilder str = new StringBuilder("[");
+        for(int i = 0; i < size(); i++) {
+            str.append(" ").append(get(i));
+        }
+        str.append(" ]; size: ").append(size()).append(";");
+        return str.toString();
     }
 
     @Override
@@ -181,7 +183,7 @@ public class DIYarrayList<T> implements List<T> {
         public T next() {
             if (hasNext()) {
                 current++;
-                return self.elements[current];
+                return self.get(current);
             } else {
                 throw new NoSuchElementException();
             }
@@ -196,7 +198,7 @@ public class DIYarrayList<T> implements List<T> {
         public T previous() {
             if (hasPrevious()) {
                 current--;
-                return self.elements[current];
+                return self.get(current);
             } else {
                 throw new NoSuchElementException();
             }
