@@ -3,8 +3,26 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        DIYarrayList<Integer> srcList = new DIYarrayList<>();
-        DIYarrayList<Integer> destList = new DIYarrayList<>();
+        /**
+         * test listIterator start
+         */
+        List<Integer> myList = new DIYarrayList<>();
+        myList.add(1);
+        myList.add(2);
+
+        ListIterator<Integer> li1 = myList.listIterator();
+        System.out.println(li1.next());
+        System.out.println(li1.next());
+
+        ListIterator<Integer> li2 = myList.listIterator();
+        System.out.println(li2.next());
+
+        /**
+         * test listIterator end
+         */
+
+        List<Integer> srcList = new DIYarrayList<>();
+        List<Integer> destList = new DIYarrayList<>();
 
         Random random = new Random();
 

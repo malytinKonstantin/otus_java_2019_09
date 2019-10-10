@@ -14,16 +14,13 @@ public class DIYarrayList<T> implements List<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private final ListItr listItr;
-
     public DIYarrayList() {
         elements = (T[]) new Object[DEFAULT_CAPACITY];
-        listItr = new ListItr(this);
+
     }
 
     public DIYarrayList(int capacity) {
         elements = (T[]) new Object[capacity];
-        listItr = new ListItr(this);
     }
 
     private void growArray() {
@@ -240,7 +237,7 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return listItr;
+        return new ListItr(this);
     }
 
     @Override
